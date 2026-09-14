@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Udvozlo", "Udvozlo\Udvozlo.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator", "Calculator\Calculator.csproj", "{448BD704-8144-4E95-9205-A1419E76340E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgramozasiTetelek", "ProgramozasiTetelek\ProgramozasiTetelek.csproj", "{856A2F91-E440-41D0-BF5F-EA9F78780C39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{448BD704-8144-4E95-9205-A1419E76340E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{448BD704-8144-4E95-9205-A1419E76340E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{448BD704-8144-4E95-9205-A1419E76340E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{856A2F91-E440-41D0-BF5F-EA9F78780C39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{856A2F91-E440-41D0-BF5F-EA9F78780C39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{856A2F91-E440-41D0-BF5F-EA9F78780C39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{856A2F91-E440-41D0-BF5F-EA9F78780C39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

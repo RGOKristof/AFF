@@ -38,7 +38,11 @@ namespace Calculator
                     failed = "Rossz bevitel!";
                     continue;
                 }
-
+                int i = 0;
+                while (i < operandusInput.Length && (char.IsDigit(operandusInput[i]) || operandusInput[i] == ','))
+                {
+                    i++;
+                }
                 if (decimal.TryParse(operandusInput, out decimal parsed))
                 {
                     if (Decimal.Parse(operandusInput) == 0 && currentOperator == '/')
@@ -55,10 +59,12 @@ namespace Calculator
         static void Main(string[] args)
         {
             Console.Title = "Calculator";
+
+
             char currentOperator = '+';
-            decimal currentOperandusOne;
-            decimal currentOperandusTwo;
-            decimal result;
+            decimal currentOperandusOne = 1;
+            decimal currentOperandusTwo = 1;
+            decimal result = 1;
 
             bool failed = false;
             while (true)
@@ -127,6 +133,8 @@ namespace Calculator
                     break;
 
             }
+
+            Console.Clear();
 
             Console.WriteLine(result);
 
