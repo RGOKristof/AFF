@@ -31,7 +31,7 @@
             }
             return i > tombLength;
         }
-        public static bool RendezettE(int[] tomb, int tombLength)
+        public static bool RendezettE8(int[] tomb, int tombLength)
         {
             int i = 0;
             while (i <= tombLength && tomb[i] % 2 == 0)

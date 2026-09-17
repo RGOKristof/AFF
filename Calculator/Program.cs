@@ -45,7 +45,7 @@ namespace Calculator
                 }
                 if (decimal.TryParse(operandusInput, out decimal parsed))
                 {
-                    if (Decimal.Parse(operandusInput) == 0 && currentOperator == '/')
+                    if (decimal.Parse(operandusInput) == 0 && currentOperator == '/')
                     {
                         failed = "Nem lehet 0-át/0-val osztani!";
                         continue;
@@ -103,7 +103,6 @@ namespace Calculator
                 else
                 {
                     failed = true;
-                    continue;
                 }
             }
 
