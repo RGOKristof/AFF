@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgramozasiTetelek", "Prog
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorV2", "CalculatorV2\CalculatorV2.csproj", "{9F846DC7-C2DE-4110-AE94-48533A4A08DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drawing", "Drawing\Drawing.csproj", "{94A4BB00-2D15-4958-BE67-4A65B99CE4CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{9F846DC7-C2DE-4110-AE94-48533A4A08DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F846DC7-C2DE-4110-AE94-48533A4A08DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F846DC7-C2DE-4110-AE94-48533A4A08DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94A4BB00-2D15-4958-BE67-4A65B99CE4CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94A4BB00-2D15-4958-BE67-4A65B99CE4CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94A4BB00-2D15-4958-BE67-4A65B99CE4CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94A4BB00-2D15-4958-BE67-4A65B99CE4CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
