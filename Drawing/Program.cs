@@ -32,9 +32,18 @@ namespace Drawing
             {
                 for (int y = 0; y < windowHeight; y++)
                 {
-                    if (y == 0 && x == 0) { border.Append('╔'); }
-                    else if (y == 0 && x < windowWidth) { border.Append('═'); }
-                    else if (y == 0 && (x >= windowWidth)) { border.Append('╗'); }
+                    if      (y == 0 && x == 0) { border.Append('╔'); }
+                    else if (y == 0 && (x != 0 && x != windowWidth - 1)) { border.Append('═'); }
+                    else if (y == 0 && x == windowWidth - 1) { border.Append('╗'); }
+
+                    else if ((y != 0 && y != windowHeight - 1) && x == 0) { border.Append('║'); }
+                    else if ((y != 0 && y != windowHeight - 1) && x == windowWidth - 1) { border.Append("║\n"); }
+
+                    else if (y == windowHeight - 1 && x == 0) { border.Append('╚'); }
+                    else if (y == windowHeight - 1 && (x != 0 && x != windowWidth - 1)) { border.Append('═'); }
+                    else if (y == windowHeight - 1 && x == windowWidth - 1) { border.Append('╝'); }
+
+                    else { border.Append(' '); }
                 }
             }
             Console.Write(border.ToString());
