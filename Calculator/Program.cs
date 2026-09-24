@@ -1,15 +1,101 @@
-﻿#pragma warning disable CS8600
 namespace Calculator
 {
     internal class Program
     {
-        static void ErrorMessage(string message)
+        static void showErrorMessage(string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(message);
             Console.ForegroundColor = ConsoleColor.White;
         }
-        static decimal TakingOperandus(int numOfOperandus, char currentOperator)
+
+        // Digit-by-digit check: is the whole string a valid number (optional leading '-',
+        // digits, at most one ',')? No TryParse involved.
+        static bool isValidNumber(string input, out string errorText)
+        {
+            int index = 0;
+            bool hasDigit = false;
+            bool hasComma = false;
+
+            if (input.Length > 0 && input[0] == '-')
+            {
+                index = 1;
+            }
+
+            while (index < input.Length)
+            {
+                char currentChar = input[index];
+
+                if (char.IsDigit(currentChar))
+                {
+                    hasDigit = true;
+                }
+                else if (currentChar == ',')
+                {
+                    if (hasComma)
+                    {
+                        errorText = "Csak egy tizedesvessző szerepelhet a számban!";
+                        return false;
+                    }
+                    hasComma = true;
+                }
+                else
+                {
+                    errorText = "Rossz bevitel!";
+                    return false;
+                }
+
+                index++;
+            }
+
+            if (!hasDigit)
+            {
+                errorText = "Rossz bevitel!";
+                return false;
+            }
+
+            errorText = "";
+            return true;
+        }
+
+        // Manual string -> decimal conversion (no decimal.Parse / TryParse).
+        // Only called after isValidNumber already confirmed the format is correct.
+        static decimal parseDecimal(string input)
+        {
+            bool isNegative = false;
+            int index = 0;
+
+            if (input[0] == '-')
+            {
+                isNegative = true;
+                index = 1;
+            }
+
+            decimal integerPart = 0;
+            while (index < input.Length && char.IsDigit(input[index]))
+            {
+                integerPart = integerPart * 10 + (input[index] - '0');
+                index++;
+            }
+
+            decimal fractionPart = 0;
+            if (index < input.Length && input[index] == ',')
+            {
+                index++;
+                decimal placeValue = 0.1m;
+                while (index < input.Length && char.IsDigit(input[index]))
+                {
+                    fractionPart += (input[index] - '0') * placeValue;
+                    placeValue *= 0.1m;
+                    index++;
+                }
+            }
+
+            decimal value = integerPart + fractionPart;
+            return isNegative ? -value : value;
+        }
+
+        static decimal takingOperandus(int numOfOperandus, char currentOperator)
         {
             string failed = "";
             while (true)
@@ -18,7 +104,7 @@ namespace Calculator
 
                 if (failed != "")
                 {
-                    ErrorMessage(failed);
+                    showErrorMessage(failed);
                 }
 
                 switch (numOfOperandus)
@@ -31,49 +117,46 @@ namespace Calculator
                         break;
                 }
 
-                string operandusInput = Console.ReadLine();
+                string operandusInput = Console.ReadLine() ?? "";
 
                 if (string.IsNullOrWhiteSpace(operandusInput))
                 {
                     failed = "Rossz bevitel!";
                     continue;
                 }
-                int i = 0;
-                while (i < operandusInput.Length && (char.IsDigit(operandusInput[i]) || operandusInput[i] == ','))
+
+                if (!isValidNumber(operandusInput, out string errorText))
                 {
-                    i++;
-                }
-                if (decimal.TryParse(operandusInput, out decimal parsed))
-                {
-                    if (decimal.Parse(operandusInput) == 0 && currentOperator == '/')
-                    {
-                        failed = "Nem lehet 0-át/0-val osztani!";
-                        continue;
-                    }
-                    return parsed;
+                    failed = errorText;
+                    continue;
                 }
 
-                failed = "Rossz bevitel!";
+                decimal parsed = parseDecimal(operandusInput);
+
+                if (parsed == 0 && currentOperator == '/')
+                {
+                    failed = "Nem lehet 0-át/0-val osztani!";
+                    continue;
+                }
+
+                return parsed;
             }
         }
+
         static void Main(string[] args)
         {
             Console.Title = "Calculator";
 
-
             char currentOperator = '+';
-            decimal currentOperandusOne = 1;
-            decimal currentOperandusTwo = 1;
-            decimal result = 1;
+            string failedOperator = "";
 
-            bool failed = false;
             while (true)
             {
                 Console.Clear();
 
-                if (failed)
+                if (failedOperator != "")
                 {
-                    ErrorMessage("Rossz bevitel!");
+                    showErrorMessage(failedOperator);
                 }
 
                 Console.Write("Válassz operátort(");
@@ -86,8 +169,7 @@ namespace Calculator
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("]: ");
 
-                string operatorInput = Console.ReadLine();
-
+                string operatorInput = Console.ReadLine() ?? "";
 
                 if (string.IsNullOrWhiteSpace(operatorInput))
                 {
@@ -97,17 +179,16 @@ namespace Calculator
 
                 if (operatorInput == "+" || operatorInput == "-" || operatorInput == "*" || operatorInput == "/")
                 {
-                    currentOperator = char.Parse(operatorInput);
+                    currentOperator = operatorInput[0];
                     break;
                 }
-                else
-                {
-                    failed = true;
-                }
+
+                failedOperator = "Rossz bevitel!";
             }
 
-            currentOperandusOne = TakingOperandus(1, currentOperator);
-            currentOperandusTwo = TakingOperandus(2, currentOperator);
+            decimal currentOperandusOne = takingOperandus(1, currentOperator);
+            decimal currentOperandusTwo = takingOperandus(2, currentOperator);
+            decimal result;
 
             switch (currentOperator)
             {
@@ -130,14 +211,10 @@ namespace Calculator
                 default:
                     result = 0;
                     break;
-
             }
 
             Console.Clear();
-
             Console.WriteLine(result);
-
-
         }
     }
 }
