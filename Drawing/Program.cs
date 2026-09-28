@@ -25,28 +25,58 @@ namespace Drawing
     {
         static void BorderCreating()
         {
+            Console.SetCursorPosition(0, 0);
             int windowWidth = Console.WindowWidth;
             int windowHeight = Console.WindowHeight;
             StringBuilder border = new StringBuilder();
-            for (int x = 0; x < windowWidth; x++)
+            border.Append("╔");
+            for (int x = 0; x < windowWidth - 2; x++)
             {
-                for (int y = 0; y < windowHeight; y++)
-                {
-                    if      (y == 0 && x == 0) { border.Append('╔'); }
-                    else if (y == 0 && (x != 0 && x != windowWidth - 1)) { border.Append('═'); }
-                    else if (y == 0 && x == windowWidth - 1) { border.Append('╗'); }
-
-                    else if ((y != 0 && y != windowHeight - 1) && x == 0) { border.Append('║'); }
-                    else if ((y != 0 && y != windowHeight - 1) && x == windowWidth - 1) { border.Append("║\n"); }
-
-                    else if (y == windowHeight - 1 && x == 0) { border.Append('╚'); }
-                    else if (y == windowHeight - 1 && (x != 0 && x != windowWidth - 1)) { border.Append('═'); }
-                    else if (y == windowHeight - 1 && x == windowWidth - 1) { border.Append('╝'); }
-
-                    else { border.Append(' '); }
-                }
+                border.Append("═");
             }
+            border.Append("╗");
+            for (int y = 0; y < windowHeight - 2; y++)
+            {
+                border.Append("║");
+                for (int x = 0; x < windowWidth - 2; x++)
+                {
+                    border.Append(" ");
+                }
+                border.Append("║");
+            }
+            border.Append("╚");
+            for (int x = 0; x < windowWidth - 2; x++)
+            {
+                border.Append("═");
+            }
+            border.Append("╝");
             Console.Write(border.ToString());
+        }
+        static void SetOpacity(ConsoleKey key, ref int)
+        {
+            switch (key)
+            {
+                case ConsoleKey.F1:
+                    opacity = 2;
+            }
+        }
+        static void Write(int opacity)
+        {
+            switch (opacity)
+            {
+                case 1:
+                    Console.Write("█");
+                    break;
+                case 2:
+                    Console.Write("▓");
+                    break;
+                case 3:
+                    Console.Write("▒");
+                    break;
+                case 4:
+                    Console.Write("░");
+                    break;
+            }
         }
         static void MoveCursor(ConsoleKey key)
         {
@@ -57,38 +87,71 @@ namespace Drawing
                 case ConsoleKey.UpArrow:
                     if (fromTop > 1)
                     {
-                        Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop - 1);
+                        Console.CursorTop--;
+                        if (Console.CapsLock) 
+                        { 
+                            Console.Write("█");
+                            Console.CursorLeft--;
+                        }
                     }
                     break;
                 case ConsoleKey.RightArrow:
                     if (fromLeft < Console.WindowWidth - 2)
                     {
-                        Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
+                        Console.CursorLeft++;
+                        if (Console.CapsLock)
+                        { 
+                            Console.Write("█");
+                            Console.CursorLeft--;
+                        }
                     }
                     break;
                 case ConsoleKey.DownArrow:
                     if (fromTop < Console.WindowHeight - 2)
                     {
-                        Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop + 1);
+                        Console.CursorTop++;
+                        if (Console.CapsLock)
+                        {
+                            Console.Write("█");
+                            Console.CursorLeft--;
+                        }
                     }
                     break;
                 case ConsoleKey.LeftArrow:
                     if (fromLeft > 1)
                     {
-                        Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                        Console.CursorLeft--;
+                        if (Console.CapsLock)
+                        {
+                            Console.Write("█");
+                            Console.CursorLeft--;
+                        }
                     }
                     break;
-
             }
+        }
+        static void KeyDistro(ConsoleKey key)
+        {
+            ConsoleKey[] arrowKeys = {ConsoleKey.UpArrow,ConsoleKey.RightArrow,ConsoleKey.DownArrow,ConsoleKey.LeftArrow};
+            ConsoleKey[] functionKeys = {ConsoleKey.F1, ConsoleKey.F2, ConsoleKey.F3, ConsoleKey.F4};
+            if (arrowKeys.Contains(key))
+            {
+                MoveCursor(key);
+            }
+            if (functionKeys.Contains(key))
+            {
+                SetOpacity(key,ref opacity);
+            }
+
         }
         static void Main(string[] args)
         {
+            int opacity = 1;
             BorderCreating();
-            Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
             Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
             while (true)
             {
-                MoveCursor(Console.ReadKey(false).Key);
+                KeyDistro(Console.ReadKey(true).Key);
             }
         }
     }
