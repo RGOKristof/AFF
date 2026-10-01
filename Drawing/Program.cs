@@ -16,6 +16,7 @@
 //╔═╗
 //║ ║
 //╚═╝
+using System.Drawing;
 using System.Security.Principal;
 using System.Text;
 
@@ -52,106 +53,96 @@ namespace Drawing
             border.Append("╝");
             Console.Write(border.ToString());
         }
-        static void SetOpacity(ConsoleKey key, ref int)
+        static void Write(char character,ConsoleColor color)
         {
-            switch (key)
-            {
-                case ConsoleKey.F1:
-                    opacity = 2;
-            }
-        }
-        static void Write(int opacity)
-        {
-            switch (opacity)
-            {
-                case 1:
-                    Console.Write("█");
-                    break;
-                case 2:
-                    Console.Write("▓");
-                    break;
-                case 3:
-                    Console.Write("▒");
-                    break;
-                case 4:
-                    Console.Write("░");
-                    break;
-            }
-        }
-        static void MoveCursor(ConsoleKey key)
-        {
-            int fromTop = Console.GetCursorPosition().Top;
-            int fromLeft = Console.GetCursorPosition().Left;
-            switch (key)
-            {
-                case ConsoleKey.UpArrow:
-                    if (fromTop > 1)
-                    {
-                        Console.CursorTop--;
-                        if (Console.CapsLock) 
-                        { 
-                            Console.Write("█");
-                            Console.CursorLeft--;
-                        }
-                    }
-                    break;
-                case ConsoleKey.RightArrow:
-                    if (fromLeft < Console.WindowWidth - 2)
-                    {
-                        Console.CursorLeft++;
-                        if (Console.CapsLock)
-                        { 
-                            Console.Write("█");
-                            Console.CursorLeft--;
-                        }
-                    }
-                    break;
-                case ConsoleKey.DownArrow:
-                    if (fromTop < Console.WindowHeight - 2)
-                    {
-                        Console.CursorTop++;
-                        if (Console.CapsLock)
-                        {
-                            Console.Write("█");
-                            Console.CursorLeft--;
-                        }
-                    }
-                    break;
-                case ConsoleKey.LeftArrow:
-                    if (fromLeft > 1)
-                    {
-                        Console.CursorLeft--;
-                        if (Console.CapsLock)
-                        {
-                            Console.Write("█");
-                            Console.CursorLeft--;
-                        }
-                    }
-                    break;
-            }
-        }
-        static void KeyDistro(ConsoleKey key)
-        {
-            ConsoleKey[] arrowKeys = {ConsoleKey.UpArrow,ConsoleKey.RightArrow,ConsoleKey.DownArrow,ConsoleKey.LeftArrow};
-            ConsoleKey[] functionKeys = {ConsoleKey.F1, ConsoleKey.F2, ConsoleKey.F3, ConsoleKey.F4};
-            if (arrowKeys.Contains(key))
-            {
-                MoveCursor(key);
-            }
-            if (functionKeys.Contains(key))
-            {
-                SetOpacity(key,ref opacity);
-            }
-
+            Console.Write(character);
         }
         static void Main(string[] args)
         {
-            int opacity = 1;
+            ConsoleKey[] arrowKeys = { ConsoleKey.UpArrow, ConsoleKey.RightArrow, ConsoleKey.DownArrow, ConsoleKey.LeftArrow };
+            ConsoleKey[] functionKeys = { ConsoleKey.F1, ConsoleKey.F2, ConsoleKey.F3, ConsoleKey.F4 };
+            char character = '█';
+            ConsoleColor color = ConsoleColor.White;
             BorderCreating();
             Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
             while (true)
             {
-                KeyDistro(Console.ReadKey(true).Key);
+                ConsoleKey pressedKey = Console.ReadKey(true).Key;
+                if (arrowKeys.Contains(pressedKey))
+                {
+                    int fromTop = Console.GetCursorPosition().Top;
+                    int fromLeft = Console.GetCursorPosition().Left;
+                    switch (pressedKey)
+                    {
+                        case ConsoleKey.UpArrow:
+                            if (fromTop > 1)
+                            {
+                                Console.CursorTop--;
+                                if (Console.CapsLock)
+                                {
+                                    Write(character,color);
+                                    Console.CursorLeft--;
+                                }
+                            }
+                            break;
+                        case ConsoleKey.RightArrow:
+                            if (fromLeft < Console.WindowWidth - 2)
+                            {
+                                Console.CursorLeft++;
+                                if (Console.CapsLock)
+                                {
+                                    Write(character, color);
+                                    Console.CursorLeft--;
+                                }
+                            }
+                            break;
+                        case ConsoleKey.DownArrow:
+                            if (fromTop < Console.WindowHeight - 2)
+                            {
+                                Console.CursorTop++;
+                                if (Console.CapsLock)
+                                {
+                                    Write(character, color);
+                                    Console.CursorLeft--;
+                                }
+                            }
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            if (fromLeft > 1)
+                            {
+                                Console.CursorLeft--;
+                                if (Console.CapsLock)
+                                {
+                                    Write(character, color);
+                                    Console.CursorLeft--;
+                                }
+                            }
+                            break;
+                    }
+                }
+                if (functionKeys.Contains(pressedKey))
+                {
+                    switch (pressedKey)
+                    {
+                        case ConsoleKey.F1:
+                            character = '█';
+                            break;
+                        case ConsoleKey.F2:
+                            character = '▓';
+                            break;
+                        case ConsoleKey.F3:
+                            character = '▒';
+                            break;
+                        case ConsoleKey.F4:
+                            character = '░';
+                            break;
+                    }
+                }
+                if (ConsoleKey.Spacebar == pressedKey)
+                {
+                    Write(character, color);
+                    Console.CursorLeft--;
+                }
             }
         }
     }
