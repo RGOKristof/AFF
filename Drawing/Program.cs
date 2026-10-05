@@ -24,7 +24,7 @@ namespace Drawing
 {
     internal class Program
     {
-        static void BorderCreating()
+        static void CreateBorder()
         {
             Console.SetCursorPosition(0, 0);
             int windowWidth = Console.WindowWidth;
@@ -54,10 +54,8 @@ namespace Drawing
             Console.Write(border.ToString());
             Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
         }
-        static void Write(char character,ConsoleColor foregroundColor, ConsoleColor backgroundColor)
+        static void Write(char character)
         {
-            Console.ForegroundColor = foregroundColor;
-            Console.BackgroundColor = backgroundColor;
             Console.Write(character);
             Console.CursorLeft--;
         }
@@ -70,11 +68,8 @@ namespace Drawing
             ConsoleKey[] colorFunctionKeys = { ConsoleKey.Add, ConsoleKey.Subtract, ConsoleKey.OemPlus, ConsoleKey.OemMinus };
 
             char character = '█';
-            ConsoleColor foregroundColor = ConsoleColor.White;
-            ConsoleColor backgroundColor = ConsoleColor.Black;
-            bool darker = false;
 
-            BorderCreating();
+            CreateBorder();
             while (true)
             {
                 ConsoleKey pressedKey = Console.ReadKey(true).Key;
@@ -149,31 +144,31 @@ namespace Drawing
                     switch (pressedKey)
                     {
                         case ConsoleKey.D1:
-                            foregroundColor = ConsoleColor.Red;
+                            Console.ForegroundColor = ConsoleColor.Red;
                             break;
                         case ConsoleKey.D2:
-                            foregroundColor = ConsoleColor.Yellow;
+                            Console.ForegroundColor = ConsoleColor.Yellow;
                             break;
                         case ConsoleKey.D3:
-                            foregroundColor = ConsoleColor.Green;
+                            Console.ForegroundColor = ConsoleColor.Green;
                             break;
                         case ConsoleKey.D4:
-                            foregroundColor = ConsoleColor.Blue;
+                            Console.ForegroundColor = ConsoleColor.Blue;
                             break;
                         case ConsoleKey.D5:
-                            foregroundColor = ConsoleColor.Magenta;
+                            Console.ForegroundColor = ConsoleColor.Magenta;
                             break;
                         case ConsoleKey.D6:
-                            foregroundColor = ConsoleColor.Cyan;
+                            Console.ForegroundColor = ConsoleColor.Cyan;
                             break;
                         case ConsoleKey.D7:
-                            foregroundColor = ConsoleColor.White;
+                            Console.ForegroundColor = ConsoleColor.White;
                             break;
                         case ConsoleKey.D8:
-                            foregroundColor = ConsoleColor.Gray;
+                            Console.ForegroundColor = ConsoleColor.Gray;
                             break;
                         case ConsoleKey.D9:
-                            foregroundColor = ConsoleColor.Black;
+                            Console.ForegroundColor = ConsoleColor.Black;
                             break;
                     }
                 }
@@ -182,31 +177,31 @@ namespace Drawing
                     switch (pressedKey)
                     {
                         case ConsoleKey.NumPad1:
-                            backgroundColor = ConsoleColor.Red;
+                            Console.BackgroundColor = ConsoleColor.Red;
                             break;
                         case ConsoleKey.NumPad2:
-                            backgroundColor = ConsoleColor.Yellow;
+                            Console.BackgroundColor = ConsoleColor.Yellow;
                             break;
                         case ConsoleKey.NumPad3:
-                            backgroundColor = ConsoleColor.Green;
+                            Console.BackgroundColor = ConsoleColor.Green;
                             break;
                         case ConsoleKey.NumPad4:
-                            backgroundColor = ConsoleColor.Blue;
+                            Console.BackgroundColor = ConsoleColor.Blue;
                             break;
                         case ConsoleKey.NumPad5:
-                            backgroundColor = ConsoleColor.Magenta;
+                            Console.BackgroundColor = ConsoleColor.Magenta;
                             break;
                         case ConsoleKey.NumPad6:
-                            backgroundColor = ConsoleColor.Cyan;
+                            Console.BackgroundColor = ConsoleColor.Cyan;
                             break;
                         case ConsoleKey.NumPad7:
-                            backgroundColor = ConsoleColor.White;
+                            Console.BackgroundColor = ConsoleColor.White;
                             break;
                         case ConsoleKey.NumPad8:
-                            backgroundColor = ConsoleColor.Gray;
+                            Console.BackgroundColor = ConsoleColor.Gray;
                             break;
                         case ConsoleKey.NumPad9:
-                            backgroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = ConsoleColor.Black;
                             break;
                     }
                 }
@@ -215,18 +210,15 @@ namespace Drawing
                     switch (pressedKey)
                     {
                         case ConsoleKey.Add:
-                            darker = false;
                             break;
                         case ConsoleKey.Subtract:
-                            darker = true;
                             break;
                         case ConsoleKey.OemPlus:
-                            darker = false;
                             break;
                         case ConsoleKey.OemMinus:
-                            darker = true;
                             break;
                     }
+
                 }
                 if (ConsoleKey.Spacebar == pressedKey)
                 {
