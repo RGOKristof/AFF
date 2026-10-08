@@ -1,4 +1,5 @@
-﻿//Console.Title = "Üdvözlő";
+﻿#pragma warning disable CA1416 // Validate platform compatibility
+//Console.Title = "Üdvözlő";
 //Console.Write("add meg a neved");
 //string name = Console.ReadLine();
 //Console.WriteLine($"Szia {name}!");
@@ -54,9 +55,29 @@ namespace Drawing
             Console.Write(border.ToString());
             Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
         }
+        static void OpenMenu()
+        {
+            int[] LTP = { (Console.WindowWidth - 20) / 2 , (Console.WindowHeight - 17) / 2 };
+            
+            Console.Clear();
+            Console.SetCursorPosition(LTP[0], LTP[1]);
+            for (int i = 0; i < 4; i++)
+            {
+            Console.SetCursorPosition(LTP[0], LTP[1]);
+            Console.Write("┌──────────────────┐");
+            Console.Write("│                  │");
+            Console.Write("└──────────────────┘");
+                
+            }
+        }
         static void Write(char character)
         {
             Console.Write(character);
+            Console.CursorLeft--;
+        }
+        static void Erase()
+        {
+            Console.Write(" ");
             Console.CursorLeft--;
         }
         static void Main(string[] args)
@@ -85,9 +106,8 @@ namespace Drawing
                                 Console.CursorTop--;
                                 if (Console.CapsLock)
                                 {
-                                    Write(character,foregroundColor,backgroundColor);
-                                }
-                            }
+                                    Write(character);
+                                }                            }
                             break;
                         case ConsoleKey.RightArrow:
                             if (fromLeft < Console.WindowWidth - 2)
@@ -95,7 +115,7 @@ namespace Drawing
                                 Console.CursorLeft++;
                                 if (Console.CapsLock)
                                 {
-                                    Write(character, foregroundColor, backgroundColor);
+                                    Write(character);
                                 }
                             }
                             break;
@@ -105,7 +125,7 @@ namespace Drawing
                                 Console.CursorTop++;
                                 if (Console.CapsLock)
                                 {
-                                    Write(character, foregroundColor, backgroundColor);
+                                    Write(character);
                                 }
                             }
                             break;
@@ -115,7 +135,7 @@ namespace Drawing
                                 Console.CursorLeft--;
                                 if (Console.CapsLock)
                                 {
-                                    Write(character, foregroundColor, backgroundColor);
+                                    Write(character);
                                 }
                             }
                             break;
@@ -222,11 +242,15 @@ namespace Drawing
                 }
                 if (ConsoleKey.Spacebar == pressedKey)
                 {
-                    Write(character, foregroundColor, backgroundColor);
+                    Write(character);
                 }
                 if (ConsoleKey.Backspace == pressedKey)
                 {
-                    Write('█', ConsoleColor.Black, ConsoleColor.Black);
+                    Erase();
+                }
+                if (ConsoleKey.Escape == pressedKey)
+                {
+                    OpenMenu();
                 }
             }
         }
