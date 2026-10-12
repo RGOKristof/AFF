@@ -20,6 +20,7 @@
 using System.Drawing;
 using System.Security.Principal;
 using System.Text;
+using System.Xml;
 
 namespace Drawing
 {
@@ -57,8 +58,17 @@ namespace Drawing
         }
         static void OpenMenu()
         {
-            int[] LTP = { (Console.WindowWidth - 20) / 2 , (Console.WindowHeight - 17) / 2 };
-            
+            int buttonWidth = 15;
+            int buttonHeight = 3;
+            int marginSide = 5;
+            int marginBottom = 1;
+            string[] buttons = ["Mentés", "Betöltés", "Új", "Kilépés"];
+            int[] LTP = [ (Console.WindowWidth - (buttonWidth + marginSide)) / 2 , (Console.WindowHeight - buttons.Length * (buttonHeight + marginBottom)) / 2 ];
+
+            // Itt lekéne menteni az eddigi rajzot ramba
+
+            // Majd kirajzolni a menut
+
             Console.Clear();
             Console.SetCursorPosition(LTP[0], LTP[1]);
             for (int i = 0; i < 4; i++)
@@ -67,13 +77,35 @@ namespace Drawing
             Console.Write("┌──────────────────┐");
             Console.Write("│                  │");
             Console.Write("└──────────────────┘");
-                
             }
         }
-        static void Write(char character)
+        static string[][] SaveToMemory()
         {
+            string[][] image = [["0","0","▒","ConsoleColor.Red","ConsoleColor.Blue"]];
+
+            Console.SetCursorPosition(0, 0);
+            for (int y = 0; y < Console.WindowHeight; y++)
+            {
+                for (int x = 0; x < Console.WindowWidth; x++)
+                {
+                    string pixelX = x.ToString();
+                    string pixelY = y.ToString();
+                    //string pixelChar = Console.Read();
+                    image.Append([]);
+                    Console.CursorLeft++;
+                }
+                Console.CursorTop++;
+            }
+            return image;
+            
+        }
+        static void Write(char character, ConsoleColor BGColor, ConsoleColor FGColor)
+        {
+            Console.BackgroundColor = BGColor;
+            Console.ForegroundColor = FGColor;
             Console.Write(character);
             Console.CursorLeft--;
+            
         }
         static void Erase()
         {
@@ -89,6 +121,9 @@ namespace Drawing
             ConsoleKey[] colorFunctionKeys = { ConsoleKey.Add, ConsoleKey.Subtract, ConsoleKey.OemPlus, ConsoleKey.OemMinus };
 
             char character = '█';
+            ConsoleColor BGColor = ConsoleColor.Black;
+            ConsoleColor FGColor = ConsoleColor.White;
+
 
             CreateBorder();
             while (true)
@@ -106,8 +141,9 @@ namespace Drawing
                                 Console.CursorTop--;
                                 if (Console.CapsLock)
                                 {
-                                    Write(character);
-                                }                            }
+                                    Write(character,BGColor,FGColor);
+                                }                            
+                            }
                             break;
                         case ConsoleKey.RightArrow:
                             if (fromLeft < Console.WindowWidth - 2)
@@ -115,7 +151,7 @@ namespace Drawing
                                 Console.CursorLeft++;
                                 if (Console.CapsLock)
                                 {
-                                    Write(character);
+                                    Write(character, BGColor, FGColor);
                                 }
                             }
                             break;
@@ -125,7 +161,7 @@ namespace Drawing
                                 Console.CursorTop++;
                                 if (Console.CapsLock)
                                 {
-                                    Write(character);
+                                    Write(character, BGColor, FGColor);
                                 }
                             }
                             break;
@@ -135,7 +171,7 @@ namespace Drawing
                                 Console.CursorLeft--;
                                 if (Console.CapsLock)
                                 {
-                                    Write(character);
+                                    Write(character, BGColor, FGColor);
                                 }
                             }
                             break;
@@ -164,31 +200,31 @@ namespace Drawing
                     switch (pressedKey)
                     {
                         case ConsoleKey.D1:
-                            Console.ForegroundColor = ConsoleColor.Red;
+                            FGColor = ConsoleColor.Red;
                             break;
                         case ConsoleKey.D2:
-                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            FGColor = ConsoleColor.Yellow;
                             break;
                         case ConsoleKey.D3:
-                            Console.ForegroundColor = ConsoleColor.Green;
+                            FGColor = ConsoleColor.Green;
                             break;
                         case ConsoleKey.D4:
-                            Console.ForegroundColor = ConsoleColor.Blue;
+                            FGColor = ConsoleColor.Blue;
                             break;
                         case ConsoleKey.D5:
-                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            FGColor = ConsoleColor.Magenta;
                             break;
                         case ConsoleKey.D6:
-                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            FGColor = ConsoleColor.Cyan;
                             break;
                         case ConsoleKey.D7:
-                            Console.ForegroundColor = ConsoleColor.White;
+                            FGColor = ConsoleColor.White;
                             break;
                         case ConsoleKey.D8:
-                            Console.ForegroundColor = ConsoleColor.Gray;
+                            FGColor = ConsoleColor.Gray;
                             break;
                         case ConsoleKey.D9:
-                            Console.ForegroundColor = ConsoleColor.Black;
+                            FGColor = ConsoleColor.Black;
                             break;
                     }
                 }
@@ -197,31 +233,31 @@ namespace Drawing
                     switch (pressedKey)
                     {
                         case ConsoleKey.NumPad1:
-                            Console.BackgroundColor = ConsoleColor.Red;
+                            BGColor = ConsoleColor.Red;
                             break;
                         case ConsoleKey.NumPad2:
-                            Console.BackgroundColor = ConsoleColor.Yellow;
+                            BGColor = ConsoleColor.Yellow;
                             break;
                         case ConsoleKey.NumPad3:
-                            Console.BackgroundColor = ConsoleColor.Green;
+                            BGColor = ConsoleColor.Green;
                             break;
                         case ConsoleKey.NumPad4:
-                            Console.BackgroundColor = ConsoleColor.Blue;
+                            BGColor = ConsoleColor.Blue;
                             break;
                         case ConsoleKey.NumPad5:
-                            Console.BackgroundColor = ConsoleColor.Magenta;
+                            BGColor = ConsoleColor.Magenta;
                             break;
                         case ConsoleKey.NumPad6:
-                            Console.BackgroundColor = ConsoleColor.Cyan;
+                            BGColor = ConsoleColor.Cyan;
                             break;
                         case ConsoleKey.NumPad7:
-                            Console.BackgroundColor = ConsoleColor.White;
+                            BGColor = ConsoleColor.White;
                             break;
                         case ConsoleKey.NumPad8:
-                            Console.BackgroundColor = ConsoleColor.Gray;
+                            BGColor = ConsoleColor.Gray;
                             break;
                         case ConsoleKey.NumPad9:
-                            Console.BackgroundColor = ConsoleColor.Black;
+                            BGColor = ConsoleColor.Black;
                             break;
                     }
                 }
@@ -230,19 +266,139 @@ namespace Drawing
                     switch (pressedKey)
                     {
                         case ConsoleKey.Add:
+                            switch (BGColor)
+                            {
+                                case ConsoleColor.DarkBlue:
+                                    BGColor = ConsoleColor.Blue;
+                                    break;
+                                case ConsoleColor.DarkGreen:
+                                    BGColor = ConsoleColor.Green;
+                                    break;
+                                case ConsoleColor.DarkCyan:
+                                    BGColor = ConsoleColor.Cyan;
+                                    break;
+                                case ConsoleColor.DarkRed:
+                                    BGColor = ConsoleColor.Red;
+                                    break;
+                                case ConsoleColor.DarkMagenta:
+                                    BGColor = ConsoleColor.Magenta;
+                                    break;
+                                case ConsoleColor.DarkYellow:
+                                    BGColor = ConsoleColor.Yellow;
+                                    break;
+                                case ConsoleColor.Gray:
+                                    BGColor = ConsoleColor.White;
+                                    break;
+                                case ConsoleColor.DarkGray:
+                                    BGColor = ConsoleColor.Gray;
+                                    break;
+                                case ConsoleColor.Black:
+                                    BGColor = ConsoleColor.DarkGray;
+                                    break;
+                            }
                             break;
                         case ConsoleKey.Subtract:
+                            switch (BGColor)
+                            {
+                                case ConsoleColor.Blue:
+                                    BGColor = ConsoleColor.DarkBlue;
+                                    break;
+                                case ConsoleColor.Green:
+                                    BGColor = ConsoleColor.DarkGreen;
+                                    break;
+                                case ConsoleColor.Cyan:
+                                    BGColor = ConsoleColor.DarkCyan;
+                                    break;
+                                case ConsoleColor.Red:
+                                    BGColor = ConsoleColor.DarkRed;
+                                    break;
+                                case ConsoleColor.Magenta:
+                                    BGColor = ConsoleColor.DarkMagenta;
+                                    break;
+                                case ConsoleColor.Yellow:
+                                    BGColor = ConsoleColor.DarkYellow;
+                                    break;
+                                case ConsoleColor.White:
+                                    BGColor = ConsoleColor.Gray;
+                                    break;
+                                case ConsoleColor.Gray:
+                                    BGColor = ConsoleColor.DarkGray;
+                                    break;
+                                case ConsoleColor.DarkGray:
+                                    BGColor = ConsoleColor.Black;
+                                    break;
+                            }
                             break;
                         case ConsoleKey.OemPlus:
+                            switch (FGColor)
+                            {
+                                case ConsoleColor.DarkBlue:
+                                    FGColor = ConsoleColor.Blue;
+                                    break;
+                                case ConsoleColor.DarkGreen:
+                                    FGColor = ConsoleColor.Green;
+                                    break;
+                                case ConsoleColor.DarkCyan:
+                                    FGColor = ConsoleColor.Cyan;
+                                    break;
+                                case ConsoleColor.DarkRed:
+                                    FGColor = ConsoleColor.Red;
+                                    break;
+                                case ConsoleColor.DarkMagenta:
+                                    FGColor = ConsoleColor.Magenta;
+                                    break;
+                                case ConsoleColor.DarkYellow:
+                                    FGColor = ConsoleColor.Yellow;
+                                    break;
+                                case ConsoleColor.Gray:
+                                    FGColor = ConsoleColor.White;
+                                    break;
+                                case ConsoleColor.DarkGray:
+                                    FGColor = ConsoleColor.Gray;
+                                    break;
+                                case ConsoleColor.Black:
+                                    FGColor = ConsoleColor.DarkGray;
+                                    break;
+                            }
                             break;
                         case ConsoleKey.OemMinus:
+                            switch (FGColor)
+                            {
+                                case ConsoleColor.Blue:
+                                    FGColor = ConsoleColor.DarkBlue;
+                                    break;
+                                case ConsoleColor.Green:
+                                    FGColor = ConsoleColor.DarkGreen;
+                                    break;
+                                case ConsoleColor.Cyan:
+                                    FGColor = ConsoleColor.DarkCyan;
+                                    break;
+                                case ConsoleColor.Red:
+                                    FGColor = ConsoleColor.DarkRed;
+                                    break;
+                                case ConsoleColor.Magenta:
+                                    FGColor = ConsoleColor.DarkMagenta;
+                                    break;
+                                case ConsoleColor.Yellow:
+                                    FGColor = ConsoleColor.DarkYellow;
+                                    break;
+                                case ConsoleColor.White:
+                                    FGColor = ConsoleColor.Gray;
+                                    break;
+                                case ConsoleColor.Gray:
+                                    FGColor = ConsoleColor.DarkGray;
+                                    break;
+                                case ConsoleColor.DarkGray:
+                                    FGColor = ConsoleColor.Black;
+                                    break;
+                            }
                             break;
                     }
 
                 }
                 if (ConsoleKey.Spacebar == pressedKey)
                 {
-                    Write(character);
+                    Write(character, BGColor, FGColor);
                 }
                 if (ConsoleKey.Backspace == pressedKey)
                 {
