@@ -1,18 +1,4 @@
 ﻿#pragma warning disable CA1416 // Validate platform compatibility
-//Console.Title = "Üdvözlő";
-//Console.Write("add meg a neved");
-//string name = Console.ReadLine();
-//Console.WriteLine($"Szia {name}!");
-//Console.WindowHeight;
-//Console.WindowWidth;
-//Console.SetCursorPosition( 0, 0 );
-//var position = Console.GetCursorPosition();
-//position.Top , position.Left
-//Console.WindowLeft();
-//Console.WindowTop();
-//Console.ForegroundColor = ConsoleColor.Green;
-//Console.BackgroundColor = ConsoleColor.Green;
-//Thread.Sleep(milisec);
 //█▓▒░
 //╔═╗
 //║ ║
@@ -79,24 +65,11 @@ namespace Drawing
             Console.Write("└──────────────────┘");
             }
         }
-        static string[][] SaveToMemory()
+        static void SaveToMemory(int x,int y,char character,ConsoleColor BGC,ConsoleColor FGC)
         {
             string[][] image = [["0","0","▒","ConsoleColor.Red","ConsoleColor.Blue"]];
 
-            Console.SetCursorPosition(0, 0);
-            for (int y = 0; y < Console.WindowHeight; y++)
-            {
-                for (int x = 0; x < Console.WindowWidth; x++)
-                {
-                    string pixelX = x.ToString();
-                    string pixelY = y.ToString();
-                    //string pixelChar = Console.Read();
-                    image.Append([]);
-                    Console.CursorLeft++;
-                }
-                Console.CursorTop++;
-            }
-            return image;
+
             
         }
         static void Write(char character, ConsoleColor BGColor, ConsoleColor FGColor)
@@ -105,15 +78,18 @@ namespace Drawing
             Console.ForegroundColor = FGColor;
             Console.Write(character);
             Console.CursorLeft--;
-            
+            SaveToMemory(Console.curs);
+
         }
         static void Erase()
-        {
+        { 
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.Write(" ");
             Console.CursorLeft--;
         }
         static void Main(string[] args)
-        {
+        {   
             ConsoleKey[] arrowKeys = { ConsoleKey.UpArrow, ConsoleKey.RightArrow, ConsoleKey.DownArrow, ConsoleKey.LeftArrow };
             ConsoleKey[] functionKeys = { ConsoleKey.F1, ConsoleKey.F2, ConsoleKey.F3, ConsoleKey.F4 };
             ConsoleKey[] foregroundColorKeys = { ConsoleKey.D1, ConsoleKey.D2, ConsoleKey.D3, ConsoleKey.D4, ConsoleKey.D5, ConsoleKey.D6, ConsoleKey.D7, ConsoleKey.D8, ConsoleKey.D9 };
@@ -395,18 +371,6 @@ namespace Drawing
                             break;
                     }
 
-                }
-                if (ConsoleKey.Spacebar == pressedKey)
-                {
-                    Write(character, BGColor, FGColor);
-                }
-                if (ConsoleKey.Backspace == pressedKey)
-                {
-                    Erase();
-                }
-                if (ConsoleKey.Escape == pressedKey)
-                {
-                    OpenMenu();
                 }
             }
         }
