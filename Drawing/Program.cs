@@ -3,6 +3,7 @@
 //╔═╗
 //║ ║
 //╚═╝
+using System;
 using System.Drawing;
 using System.Security.Principal;
 using System.Text;
@@ -40,7 +41,6 @@ namespace Drawing
             }
             border.Append("╝");
             Console.Write(border.ToString());
-            Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
         }
         static void OpenMenu()
         {
@@ -67,19 +67,17 @@ namespace Drawing
         }
         static void SaveToMemory(int x,int y,char character,ConsoleColor BGC,ConsoleColor FGC)
         {
-            string[][] image = [["0","0","▒","ConsoleColor.Red","ConsoleColor.Blue"]];
+            string[] pixel = [x.ToString(), y.ToString(), character.ToString(),BGC.ToString(), FGC.ToString()];
 
-
-            
         }
-        static void Write(char character, ConsoleColor BGColor, ConsoleColor FGColor)
+        static void Write(char character, ConsoleColor BGColor, ConsoleColor FGColor, int[] CursorPosition)
+
         {
             Console.BackgroundColor = BGColor;
             Console.ForegroundColor = FGColor;
             Console.Write(character);
             Console.CursorLeft--;
-            SaveToMemory(Console.curs);
-
+            string[] pixel = [CursorPosition[0].ToString(), CursorPosition[1].ToString(), character.ToString(), BGColor.ToString(), FGColor.ToString()];
         }
         static void Erase()
         { 
@@ -100,11 +98,19 @@ namespace Drawing
             ConsoleColor BGColor = ConsoleColor.Black;
             ConsoleColor FGColor = ConsoleColor.White;
 
+            string[][] image = [];
 
             CreateBorder();
+            Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
+            int[] cursorPosition = [Console.WindowWidth / 2, Console.WindowHeight / 2];
+
             while (true)
             {
                 ConsoleKey pressedKey = Console.ReadKey(true).Key;
+                if (pressedKey == ConsoleKey.Spacebar)
+                {
+                    Write(character, BGColor, FGColor, cursorPosition);
+                }
                 if (arrowKeys.Contains(pressedKey))
                 {
                     int fromTop = Console.GetCursorPosition().Top;
@@ -115,9 +121,10 @@ namespace Drawing
                             if (fromTop > 1)
                             {
                                 Console.CursorTop--;
+                                cursorPosition[1]--;
                                 if (Console.CapsLock)
                                 {
-                                    Write(character,BGColor,FGColor);
+                                    Write(character,BGColor,FGColor,cursorPosition);
                                 }                            
                             }
                             break;
@@ -125,9 +132,10 @@ namespace Drawing
                             if (fromLeft < Console.WindowWidth - 2)
                             {
                                 Console.CursorLeft++;
+                                cursorPosition[0]++;
                                 if (Console.CapsLock)
                                 {
-                                    Write(character, BGColor, FGColor);
+                                    Write(character, BGColor, FGColor, cursorPosition);
                                 }
                             }
                             break;
@@ -135,9 +143,10 @@ namespace Drawing
                             if (fromTop < Console.WindowHeight - 2)
                             {
                                 Console.CursorTop++;
+                                cursorPosition[1]++;
                                 if (Console.CapsLock)
                                 {
-                                    Write(character, BGColor, FGColor);
+                                    Write(character, BGColor, FGColor, cursorPosition);
                                 }
                             }
                             break;
@@ -145,9 +154,10 @@ namespace Drawing
                             if (fromLeft > 1)
                             {
                                 Console.CursorLeft--;
+                                cursorPosition[0]--;
                                 if (Console.CapsLock)
                                 {
-                                    Write(character, BGColor, FGColor);
+                                    Write(character, BGColor, FGColor, cursorPosition);
                                 }
                             }
                             break;
