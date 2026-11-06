@@ -65,13 +65,7 @@ namespace Drawing
             Console.Write("└──────────────────┘");
             }
         }
-        static void SaveToMemory(int x,int y,char character,ConsoleColor BGC,ConsoleColor FGC)
-        {
-            string[] pixel = [x.ToString(), y.ToString(), character.ToString(),BGC.ToString(), FGC.ToString()];
-
-        }
         static void Write(char character, ConsoleColor BGColor, ConsoleColor FGColor, int[] CursorPosition)
-
         {
             Console.BackgroundColor = BGColor;
             Console.ForegroundColor = FGColor;
@@ -87,7 +81,14 @@ namespace Drawing
             Console.CursorLeft--;
         }
         static void Main(string[] args)
-        {   
+        {
+            Console.CursorVisible = false;
+            Console.Title = "Console Drawing";
+            Console.WindowWidth = Console.LargestWindowWidth;
+            Console.WindowHeight = Console.LargestWindowHeight;
+            Console.SetBufferSize(Console.WindowHeight);
+            Console.SetWindowPosition(0, 0);
+
             ConsoleKey[] arrowKeys = { ConsoleKey.UpArrow, ConsoleKey.RightArrow, ConsoleKey.DownArrow, ConsoleKey.LeftArrow };
             ConsoleKey[] functionKeys = { ConsoleKey.F1, ConsoleKey.F2, ConsoleKey.F3, ConsoleKey.F4 };
             ConsoleKey[] foregroundColorKeys = { ConsoleKey.D1, ConsoleKey.D2, ConsoleKey.D3, ConsoleKey.D4, ConsoleKey.D5, ConsoleKey.D6, ConsoleKey.D7, ConsoleKey.D8, ConsoleKey.D9 };
@@ -103,6 +104,7 @@ namespace Drawing
             CreateBorder();
             Console.SetCursorPosition(Console.WindowWidth / 2, Console.WindowHeight / 2);
             int[] cursorPosition = [Console.WindowWidth / 2, Console.WindowHeight / 2];
+            Console.CursorVisible = true;
 
             while (true)
             {
