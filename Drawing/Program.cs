@@ -84,9 +84,8 @@ namespace Drawing
         {
             Console.CursorVisible = false;
             Console.Title = "Console Drawing";
-            Console.WindowWidth = Console.LargestWindowWidth;
-            Console.WindowHeight = Console.LargestWindowHeight;
-            Console.SetBufferSize(Console.WindowHeight);
+            Console.WindowWidth = Console.LargestWindowWidth / 2;
+            Console.WindowHeight = Console.LargestWindowHeight / 2;
             Console.SetWindowPosition(0, 0);
 
             ConsoleKey[] arrowKeys = { ConsoleKey.UpArrow, ConsoleKey.RightArrow, ConsoleKey.DownArrow, ConsoleKey.LeftArrow };

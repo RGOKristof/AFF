@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorV2", "CalculatorV
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drawing", "Drawing\Drawing.csproj", "{94A4BB00-2D15-4958-BE67-4A65B99CE4CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawingRemake", "DrawingRemake\DrawingRemake.csproj", "{30B43135-5589-4A6B-988A-88DE224F1369}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{94A4BB00-2D15-4958-BE67-4A65B99CE4CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94A4BB00-2D15-4958-BE67-4A65B99CE4CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94A4BB00-2D15-4958-BE67-4A65B99CE4CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30B43135-5589-4A6B-988A-88DE224F1369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30B43135-5589-4A6B-988A-88DE224F1369}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30B43135-5589-4A6B-988A-88DE224F1369}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30B43135-5589-4A6B-988A-88DE224F1369}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
