@@ -22,9 +22,12 @@ namespace DrawingRemake
             }
             Offset = Options.Length > 5 ? 9 : (Options.Length * 2) - 1;
             StartCorner = [(Console.WindowWidth / 2) - ((WidestString + 4) / 2), (Console.WindowHeight / 2) - Offset];
-
+            
             for (int i = 0; i < Options.Length; i++)
             {
+                int space = (WidestString + 2 - Options[i].Length) / 2 ;
+                int space1 = space ;
+                int space2 = space ;
                 Console.SetCursorPosition(StartCorner[0], StartCorner[1] + (i * 4));
 
                 Console.Write('┌');
@@ -37,18 +40,18 @@ namespace DrawingRemake
                 Console.SetCursorPosition(StartCorner[0], StartCorner[1] + 1 + (i * 4));
 
                 Console.Write('│');
-                for (int i2 = 0; i2 < ((WidestString + 2) - Options[i].Length) / 2; i2++)
+                for (int i2 = 0; i2 < space1; i2++)
                 {
                     Console.Write(' ');
                 }
                 Console.Write(Options[i]);
-                for (int i2 = 0; i2 < (Options[i].Length % 2 == 0 ? (WidestString + 2 - Options[i].Length) / 2 : (WidestString + 2 - Options[i].Length) / 2 + 1); i2++) // Itt nem lesz jo valami
+                for (int i2 = 0; i2 < space2; i2++)
                 {
                     Console.Write(' ');
                 }
                 Console.Write('│');
 
-                Console.SetCursorPosition(StartCorner[0], StartCorner[1] + 2 + (i * 4)); // vagy itt
+                Console.SetCursorPosition(StartCorner[0], StartCorner[1] + 2 + (i * 4));
 
                 Console.Write('└');
                 for (int i2 = 0; i2 < WidestString + 2; i2++)
